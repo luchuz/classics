@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://luchuz.github.io/classics/sitemap.xml
