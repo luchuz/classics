@@ -458,6 +458,29 @@ def build_home(piano, audio, hist) -> None:
     page("", f"{SITE} – Free Sheet Music, Audiobooks & History", TAGLINE, "\n".join(body), "")
 
 
+def build_privacy() -> None:
+    """/privacy/ — required by Google before an OAuth app (the bots' YouTube upload clients) can leave
+    'Testing' status. The bots only ever act on our own channels, so this is short and honest."""
+    body = ["<h1>Privacy policy</h1>",
+            f'<p class="sub">{SITE} and the automated YouTube tools behind it</p>',
+            "<p>This site is a static collection of pages. It sets no cookies, runs no analytics, and collects no personal "
+            "information from visitors. Links to YouTube and to the source archives (Mutopia, LibriVox, Project Gutenberg, "
+            "Wikimedia Commons) are subject to those sites' own privacy policies.</p>",
+            "<h2>YouTube tools</h2>",
+            "<p>The channels listed on this site are published by small automated tools that use the YouTube Data API. "
+            "Those tools sign in to YouTube only as the channel owner, only to upload videos, set thumbnails, manage "
+            "playlists and reply to comments on the owner's own channels. They do not access, store or share any "
+            "other user's data, and they do not read viewer information beyond what YouTube shows publicly.</p>",
+            "<p>Use of the YouTube API is also covered by the "
+            '<a href="https://policies.google.com/privacy" rel="noopener">Google Privacy Policy</a>. '
+            "Access granted to these tools can be revoked at any time at "
+            '<a href="https://myaccount.google.com/permissions" rel="noopener">myaccount.google.com/permissions</a>.</p>',
+            "<h2>Contact</h2>",
+            "<p>Questions about this policy or a takedown request: leave a comment on any video of the channel concerned, "
+            "or use the contact link in that channel's About tab.</p>"]
+    page("privacy", f"Privacy policy – {SITE}", "Privacy policy for the Classics Library site and its automated YouTube tools.", "\n".join(body), "")
+
+
 def write_sitemap() -> None:
     urls = "".join(f"<url><loc>{esc(u)}</loc><lastmod>{d}</lastmod></url>" for u, d in PAGES)
     (HERE / "sitemap.xml").write_text(f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">{urls}</urlset>\n', encoding="utf-8")
@@ -481,6 +504,7 @@ def main() -> None:
     audio = build_audiobooks()
     hist = build_history()
     build_home(piano, audio, hist)
+    build_privacy()
     write_sitemap()
     print(f"built {len(PAGES)} pages: {len(piano)} piano, {sum(i['n'] for i in audio)} audiobook chapters in {len(audio)} books, {len(hist)} history")
 
