@@ -5,7 +5,7 @@ export PATH="/opt/homebrew/bin:/usr/local/bin:$PATH"
 LOG=deploy.log
 {
   echo "===== $(date '+%Y-%m-%d %H:%M:%S %Z') site build ====="
-  python3 build.py 2>&1 | grep -v "Warning\|warnings.warn"
+  /usr/bin/python3 build.py 2>&1 | grep -v "Warning\|warnings.warn"
   if [ -n "$(git status --porcelain)" ]; then
     git add -A && git commit -qm "build $(date '+%Y-%m-%d %H:%M')" && echo "committed"
   else
